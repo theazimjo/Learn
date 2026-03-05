@@ -1,5 +1,6 @@
 package abs.uits.learn
 
+import abs.uits.learn.ui.navigation.NavGraph
 import abs.uits.learn.ui.screens.login.Login
 import abs.uits.learn.ui.theme.Black
 import abs.uits.learn.ui.theme.White
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.os.ProfilingRequest
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -57,8 +59,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-//            Bu test
-            Login()
+            var navController = rememberNavController()
+
+            NavGraph(navController)
+
         }
     }
 }

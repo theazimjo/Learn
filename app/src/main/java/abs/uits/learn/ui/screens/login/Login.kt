@@ -19,10 +19,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 
 @Composable
-fun Login(modifier: Modifier = Modifier, viewModel: LoginViewModel = viewModel()) {
+fun Login(
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel = viewModel(),
+    navController: NavController
+) {
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column() {
             var username by remember { mutableStateOf("") }
@@ -30,7 +35,7 @@ fun Login(modifier: Modifier = Modifier, viewModel: LoginViewModel = viewModel()
             var expiresInMins by remember { mutableStateOf(30) }
             var scope = rememberCoroutineScope()
 
-            var message by remember { mutableStateOf("") }
+            var status by remember { mutableStateOf("") }
 
             TextField(
                 value = username,
@@ -50,18 +55,17 @@ fun Login(modifier: Modifier = Modifier, viewModel: LoginViewModel = viewModel()
             )
             Spacer(modifier.height(15.dp))
 
-            Text(text = "$message")
+            Text(text = "$status")
 
             Button(
                 onClick = {
                     scope.launch {
                         try {
-                            var userinfo =
-                                viewModel.login(UserLogin(username, password, expiresInMins))
 
-                            message = "$userinfo"
+                            viewModel.login(UserLogin(username, password, expiresInMins))
+                            navController.navigate("home")
                         } catch (e: Exception) {
-                            message = "Login error: $e"
+                            status = "Email or Password wrong!"
                         }
                     }
                 }
