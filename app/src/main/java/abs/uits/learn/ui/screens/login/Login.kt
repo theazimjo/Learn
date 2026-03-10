@@ -30,8 +30,8 @@ fun Login(
 ) {
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column() {
-            var username by remember { mutableStateOf("") }
-            var password by remember { mutableStateOf("") }
+            var username by remember { mutableStateOf("emilys") }
+            var password by remember { mutableStateOf("emilyspass") }
             var expiresInMins by remember { mutableStateOf(30) }
             var scope = rememberCoroutineScope()
 
@@ -63,7 +63,7 @@ fun Login(
                         try {
 
                             viewModel.login(UserLogin(username, password, expiresInMins))
-                            navController.navigate("home")
+                            navController.navigate("main")
                         } catch (e: Exception) {
                             status = "Email or Password wrong!"
                         }

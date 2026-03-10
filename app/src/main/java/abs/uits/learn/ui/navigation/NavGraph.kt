@@ -1,5 +1,7 @@
 package abs.uits.learn.ui.navigation
 
+import abs.uits.learn.ui.screens.MainScreen
+import abs.uits.learn.ui.screens.explore.Explore
 import abs.uits.learn.ui.screens.home.Home
 import abs.uits.learn.ui.screens.login.Login
 import abs.uits.learn.ui.screens.splash.Splash
@@ -23,8 +25,8 @@ fun NavGraph(navController: NavHostController) {
             Login(modifier = Modifier, viewModel(), navController)
         }
 
-        composable("home") {
-            Home(modifier = Modifier, viewModel())
+        composable("main") {
+            MainScreen(modifier = Modifier, viewModel(), navController)
         }
     }
 
