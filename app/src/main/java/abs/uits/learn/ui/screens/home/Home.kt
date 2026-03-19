@@ -2,6 +2,7 @@ package abs.uits.learn.ui.screens.home
 
 import abs.uits.learn.R
 import abs.uits.learn.domain.model.Product
+import abs.uits.learn.ui.components.ProductItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -57,6 +58,9 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
         modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+
+
+
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(20.dp)
         ) {
@@ -68,61 +72,3 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
 }
 
 
-@Composable
-fun ProductItem(modifier: Modifier = Modifier, products: Product) {
-    Card(
-        modifier
-            .width(170.dp)
-            .height(260.dp)
-            .clip(RoundedCornerShape(15.dp)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Column(
-            modifier
-                .fillMaxSize()
-                .padding(15.dp),
-
-            ) {
-            AsyncImage(
-                model = products.thumbnail,
-                contentDescription = "Rasm",
-                modifier.height(140.dp),
-                contentScale = ContentScale.Crop,
-            )
-            Spacer(modifier.height(5.dp))
-            Text(
-                text = products.title,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1
-            )
-            Spacer(modifier.height(5.dp))
-            Row(
-                modifier.fillMaxWidth(),
-            ) {
-                Text(text = "${products.weight}", fontSize = 9.sp)
-                Text(text = products.brand, fontSize = 9.sp)
-            }
-            Spacer(modifier.height(8.dp))
-
-            Row(
-                modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "${products.price}")
-                Button(
-                    onClick = {},
-                    modifier
-                        .width(60.dp)
-                        .height(60.dp),
-                    shape = RoundedCornerShape(17.dp),
-                ) {
-                    Image(painter = painterResource(R.drawable.plus), contentDescription = "")
-                }
-            }
-
-        }
-
-    }
-}

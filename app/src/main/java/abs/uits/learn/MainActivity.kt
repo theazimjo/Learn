@@ -3,6 +3,7 @@ package abs.uits.learn
 import abs.uits.learn.ui.navigation.NavGraph
 import abs.uits.learn.ui.screens.login.Login
 import abs.uits.learn.ui.theme.Black
+import abs.uits.learn.ui.theme.LearnTheme
 import abs.uits.learn.ui.theme.White
 import android.content.Context
 import android.os.Build
@@ -59,9 +60,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var navController = rememberNavController()
+            LearnTheme(){
+                var navController = rememberNavController()
 
-            NavGraph(navController)
+                NavGraph(navController)
+            }
 
         }
     }
