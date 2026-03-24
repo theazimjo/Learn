@@ -13,16 +13,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -60,8 +63,9 @@ fun Login(
         ) {
             var username by remember { mutableStateOf("emilys") }
             var password by remember { mutableStateOf("emilyspass") }
-            var expiresInMins by remember { mutableStateOf(30) }
+            var expiresInMins by remember { mutableIntStateOf(30) }
             var scope = rememberCoroutineScope()
+            var progress by remember { mutableStateOf(false) }
 
             var status by remember { mutableStateOf("") }
 
@@ -138,24 +142,32 @@ fun Login(
                 onClick = {
                     scope.launch {
                         try {
-
+                            progress = true
                             viewModel.login(UserLogin(username, password, expiresInMins))
                             navController.navigate("main")
                         } catch (e: Exception) {
+                            progress = false
                             status = "Email or Password wrong!"
                         }
                     }
                 },
-                modifier.fillMaxWidth().height(67.dp),
+                modifier
+                    .fillMaxWidth()
+                    .height(67.dp),
                 shape = RoundedCornerShape(19.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF53B175), // Button background color
-                    contentColor = Color.White, // Text/Icon color when enabled
-                    disabledContainerColor = Color.Gray, // Button background color when disabled
-                    disabledContentColor = Color.DarkGray // Text/Icon color when disabled
+                    containerColor = Color(0xFF53B175),
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.DarkGray
                 )
             ) {
-                Text("Log in", fontSize = 18.sp)
+
+                if (progress) {
+                    CircularProgressIndicator(color = Color(0xFFFFFFFF))
+                } else {
+                    Text("Log in", fontSize = 18.sp)
+                }
             }
 
         }
