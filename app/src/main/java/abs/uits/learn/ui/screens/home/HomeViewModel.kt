@@ -9,4 +9,5 @@ class HomeViewModel : ViewModel() {
         var products = RetrofitClient.Api.getAllProducts()
         return products
     }
+
 }

@@ -4,6 +4,7 @@ import abs.uits.learn.ui.navigation.BottomNavGraph
 import abs.uits.learn.ui.navigation.NavGraph
 import abs.uits.learn.ui.screens.home.HomeViewModel
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
@@ -39,10 +41,11 @@ fun MainScreen(
     val bottomNavController = rememberNavController()
 
     Box(
-        modifier.fillMaxSize(),
+        modifier.fillMaxSize().background(Color.White),
         contentAlignment = Alignment.Center
     ) {
         Scaffold(
+            modifier.fillMaxSize().background(Color.White),
             bottomBar = {
                 NavigationBar() {
                     NavigationBarItem(
@@ -82,7 +85,7 @@ fun MainScreen(
                 }
             }
         ) {
-            Box(modifier.padding(it)) {
+            Box(modifier.padding(it).background(Color.White)) {
                 BottomNavGraph(navController = bottomNavController)
             }
         }

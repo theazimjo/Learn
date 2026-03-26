@@ -5,6 +5,7 @@ import abs.uits.learn.domain.model.Product
 import abs.uits.learn.ui.components.ProductItem
 import abs.uits.learn.ui.components.Search
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -52,84 +54,130 @@ import coil.compose.AsyncImage
 fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
 
     var products by remember { mutableStateOf<List<Product>>(emptyList()) }
+    var BestSellingsProducts by remember { mutableStateOf<List<Product>>(emptyList()) }
 
     LaunchedEffect(Unit) {
         var productss = viewModel.GetAllProducts().products
         products = productss
     }
 
+    LaunchedEffect(Unit) {
+        val allProducts = viewModel.GetAllProducts().products
+        products = allProducts
+        BestSellingsProducts = allProducts.filter { it.rating > 4.0 }
+    }
+
     Box(
-        modifier.fillMaxSize(),
+        modifier.fillMaxSize().background(Color.White),
         contentAlignment = Alignment.TopCenter
     ) {
 
-
-        Column(
+        LazyColumn(
             modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier.height(15.dp))
+           items(1){
+               Spacer(modifier.height(15.dp))
 
-            Image(
-                modifier = modifier.width(30.dp),
-                painter = painterResource(R.drawable.carrot),
-                contentDescription = "",
-                contentScale = ContentScale.Crop
-            )
+               Image(
+                   modifier = modifier.width(30.dp),
+                   painter = painterResource(R.drawable.carrot),
+                   contentDescription = "",
+                   contentScale = ContentScale.Crop
+               )
 
-            Spacer(modifier.height(10.dp))
+               Spacer(modifier.height(10.dp))
 
-            Row() {
-                Icon(Icons.Default.LocationOn, contentDescription = "", tint = Color(0xFF4C4F4D))
-                Text(
-                    text = "Tashkent",
-                    color = Color(0xFF4C4F4D),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
+               Row() {
+                   Icon(Icons.Default.LocationOn, contentDescription = "", tint = Color(0xFF4C4F4D))
+                   Text(
+                       text = "Tashkent",
+                       color = Color(0xFF4C4F4D),
+                       fontSize = 18.sp,
+                       fontWeight = FontWeight.SemiBold
+                   )
+               }
 
-            Spacer(modifier.height(15.dp))
+               Spacer(modifier.height(15.dp))
 
-            Search()
+               Search()
 
-            Spacer(modifier.height(15.dp))
+               Spacer(modifier.height(15.dp))
 
 
 
-            Column(
-                modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(
-                    modifier.fillMaxWidth(0.9f),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Exclusive Offer",
-                        color = Color(0xFF181725),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Text(
-                        text = "See all",
-                        color = Color(0xFF53B175),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                }
-                Spacer(modifier.height(15.dp))
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    modifier = Modifier.padding(start = 5.dp)
-                ) {
-                    items(products) { product ->
-                        ProductItem(modifier = Modifier, product)
-                    }
-                }
-            }
+               Column(
+                   modifier.fillMaxWidth(),
+                   horizontalAlignment = Alignment.CenterHorizontally
+               ) {
+                   Row(
+                       modifier.fillMaxWidth(0.9f),
+                       horizontalArrangement = Arrangement.SpaceBetween,
+                       verticalAlignment = Alignment.CenterVertically
+                   ) {
+                       Text(
+                           text = "Exclusive Offer",
+                           color = Color(0xFF181725),
+                           fontSize = 24.sp,
+                           fontWeight = FontWeight.SemiBold
+                       )
+                       Text(
+                           text = "See all",
+                           color = Color(0xFF53B175),
+                           fontSize = 16.sp,
+                           fontWeight = FontWeight.SemiBold,
+                       )
+                   }
+                   Spacer(modifier.height(15.dp))
+                   LazyRow(
+                       horizontalArrangement = Arrangement.spacedBy(20.dp),
+                       modifier = Modifier.padding(start = 5.dp)
+                   ) {
+                       items(products) { product ->
+                           ProductItem(modifier = Modifier, product)
+                       }
+                   }
+               }
+               Spacer(modifier.height(25.dp))
+
+
+               Column(
+                   modifier.fillMaxWidth(),
+                   horizontalAlignment = Alignment.CenterHorizontally
+               ) {
+                   Row(
+                       modifier.fillMaxWidth(0.9f),
+                       horizontalArrangement = Arrangement.SpaceBetween,
+                       verticalAlignment = Alignment.CenterVertically
+                   ) {
+                       Text(
+                           text = "Best Selling",
+                           color = Color(0xFF181725),
+                           fontSize = 24.sp,
+                           fontWeight = FontWeight.SemiBold
+                       )
+                       Text(
+                           text = "See all",
+                           color = Color(0xFF53B175),
+                           fontSize = 16.sp,
+                           fontWeight = FontWeight.SemiBold,
+                       )
+                   }
+                   Spacer(modifier.height(15.dp))
+                   LazyRow(
+                       horizontalArrangement = Arrangement.spacedBy(20.dp),
+                       modifier = Modifier.padding(start = 5.dp)
+                   ) {
+                       items(BestSellingsProducts) { product ->
+                           ProductItem(modifier = Modifier, product)
+                       }
+                   }
+               }
+               Spacer(modifier.height(25.dp))
+           }
+
+
         }
 
 

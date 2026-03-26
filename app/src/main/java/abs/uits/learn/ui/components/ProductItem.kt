@@ -3,6 +3,7 @@ package abs.uits.learn.ui.components
 import abs.uits.learn.R
 import abs.uits.learn.domain.model.Product
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,7 +36,8 @@ fun ProductItem(modifier: Modifier = Modifier, products: Product) {
         modifier
             .width(170.dp)
             .height(260.dp)
-            .clip(RoundedCornerShape(15.dp)),
+            .clip(RoundedCornerShape(15.dp))
+           ,
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
